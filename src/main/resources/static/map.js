@@ -1,41 +1,73 @@
-var mymap = L.map('mapid').setView([53.4841100, 18.7536600], 13)
+var mymap = L.map('mapid').setView([53.468419, 18.758323], 13)
+function addMap() {
 
-L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWtyYSIsImEiOiJjazl6dzZuMzMwaXgzM2ZudjdpcnducGZkIn0.if56m-7sdPjwzBnLdnfxTQ', {
-    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>, implementation © Mikołaj Krawczak',
-    maxZoom: 18,
-    id: 'mapbox/streets-v11',
-    tileSize: 512,
-    zoomOffset: -1,
-    accessToken: 'your.mapbox.access.token'
-}).addTo(mymap);
+    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWtyYSIsImEiOiJjazl6dzZuMzMwaXgzM2ZudjdpcnducGZkIn0.if56m-7sdPjwzBnLdnfxTQ', {
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>, implementation © Mikołaj Krawczak',
+        maxZoom: 18,
+        id: 'mapbox/streets-v11',
+        tileSize: 512,
+        zoomOffset: -1,
+        accessToken: 'your.mapbox.access.token'
+    }).addTo(mymap);
 
-// var marker = L.marker([53.501757, 18.778621])
-//     .addTo(mymap)
-//     .bindPopup("jestem na Paderewskiego").openPopup();
+}
 
-console.log('/rest/api/devices');
-$.getJSON('/rest/api/devices', function (list) {
+addMap();
 
-    for (var i = 0; i < list.length; i++) {
-        const device = list[i];
-        var marker = L.marker([device.lat, device.lng])
-            .addTo(mymap)
-            .bindPopup(device.status).closePopup();
-    }
+const redIcon = L.icon({
+    iconUrl: '/img/red-dot.png',
+    iconSize: [42, 42],
+    iconAnchor: [21, 42]
 
-})
+});
+
+const greenIcon = L.icon({
+    iconUrl: '/img/green-dot.png',
+    iconSize: [42, 42],
+    iconAnchor: [21, 42],
+    popupAnchor: [0, -42]
+});
+
+var audio = new Audio('/sounds/kaczka.mp3')
+
+function getPopups() {
+    $.getJSON('/rest/api/devices', function (list) {
+        removeMarkers();
+        for (var i = 0; i < list.length; i++) {
+            var device = list[i];
+            var detailsAmount = device.deviceDetails.length;
+            var detailsList = device.deviceDetails;
+            var detailsContent = " "
+            for (var x = 0; x < detailsAmount; x++) {
+                detailsContent = detailsContent + detailsList[x].type + ": " + detailsList[x].value + "</br>";
+            }
+            var popupContent = device.address + "</br> ip: " + device.ip + "</br>" + detailsContent;
 
 
-//
-// var marker = L.marker([53.501757, 18.778621])
-//     .addTo(mymap)
-//     .bindPopup("Jestem na paderewskiego").closePopup();
+            if (device.status === "ok") {
+                L.marker([device.lat, device.lng], {icon: greenIcon})
+                    .addTo(mymap)
+                    .bindPopup(popupContent);
+            } else {
+                L.marker([device.lat, device.lng], {icon: redIcon})
+                    .addTo(mymap)
+                    .bindPopup("<b> Problem z " + device.status + "</b></br>" + popupContent);
+            }
+        }
+    })
+        .fail(function () {
+            alert("Problem z odświeżeniem danych, skontaktuj się z administratorem.")
+        })
+
+}
+
+function removeMarkers() {
+    mymap.eachLayer(function (layer) {
+        mymap.removeLayer(layer)
+    }, this)
+    addMap();
+}
 
 
-// var popup = L.bindPopup()
-// .setLatLng([53.501757, 18.778621])
-//     .setContent("Jestem na paderewskiego")
-//     .openOn(mymap);
-
-
-// 53.454509, 18.719909
+getPopups();
+setInterval(getPopups, 60000);

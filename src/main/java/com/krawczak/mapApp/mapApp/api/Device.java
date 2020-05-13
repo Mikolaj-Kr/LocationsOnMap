@@ -4,29 +4,24 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Device {
 
-    @JsonProperty("id")
-    String id;
+    @JsonProperty("ups_id")
+    Long id;
 
-    @JsonProperty("status")
-    String status;
-
-    @JsonProperty("adres")
+    @JsonProperty("ups_adres")
     String address;
 
-    @JsonProperty("gps")
-    String gps;
-
-    @JsonProperty("ip")
+    @JsonProperty("ups_ip")
     String ip;
 
-    @JsonProperty("typ")
-    String type;
+    @JsonProperty("ups_gps")
+    String coordinate;
 
-    @JsonProperty("wartosc")
-    String value;
-
+    @JsonProperty("dbo.OID")
+    List<DeviceDetails> deviceDetails;
 }
