@@ -12,8 +12,6 @@ function addMap() {
 
 }
 
-addMap();
-
 const redIcon = L.icon({
     iconUrl: '/img/red-dot.png',
     iconSize: [42, 42],
@@ -27,32 +25,55 @@ const greenIcon = L.icon({
     iconAnchor: [21, 42],
     popupAnchor: [0, -42]
 });
+var  mouse = false;
+var refresh = 0;
+const div = document.querySelector("#mapid")
 
+// div.addEventListener("mousemove", mouseMove);
+
+function mouseMove() {
+mouse = true;
+setTimeout(mouseStop, 10000)
+}
+
+function mouseStop() {
+    mouse =false;
+
+}
 var audio = new Audio('/sounds/kaczka.mp3')
 
 function getPopups() {
     $.getJSON('/rest/api/devices', function (list) {
-        removeMarkers();
-        for (var i = 0; i < list.length; i++) {
-            var device = list[i];
-            var detailsAmount = device.deviceDetails.length;
-            var detailsList = device.deviceDetails;
-            var detailsContent = " "
-            for (var x = 0; x < detailsAmount; x++) {
-                detailsContent = detailsContent + detailsList[x].type + ": " + detailsList[x].value + "</br>";
+        if (!mouse) {
+            refresh++;
+            if (refresh >240){
+                location.reload();
             }
-            var popupContent = device.address + "</br> ip: " + device.ip + "</br>" + detailsContent;
+            removeMarkers();
+            for (var i = 0; i < list.length; i++) {
+                var device = list[i];
+                var detailsAmount = device.deviceDetails.length;
+                var detailsList = device.deviceDetails;
+                var detailsContent = " "
+                for (var x = 0; x < detailsAmount; x++) {
+                    detailsContent = detailsContent + detailsList[x].type + ": " + detailsList[x].value + "</br>";
+                }
+                var popupContent = device.address + "</br> ip: " + device.ip + "</br>" + detailsContent;
 
 
-            if (device.status === "ok") {
-                L.marker([device.lat, device.lng], {icon: greenIcon})
-                    .addTo(mymap)
-                    .bindPopup(popupContent);
-            } else {
-                L.marker([device.lat, device.lng], {icon: redIcon})
-                    .addTo(mymap)
-                    .bindPopup("<b> Problem z " + device.status + "</b></br>" + popupContent);
+                if (device.status === "ok") {
+                    var marker = L.marker([device.lat, device.lng], {icon: greenIcon})
+                        .addTo(mymap)
+                        .bindPopup(popupContent);
+                } else {
+                    playAudio();
+                    L.marker([device.lat, device.lng], {icon: redIcon})
+                        .addTo(mymap)
+                        .bindPopup("<b> Problem z " + device.status + "</b></br>" + popupContent);
+                }
             }
+        } else {
+            setTimeout(getPopups, 10000)
         }
     })
         .fail(function () {
@@ -66,6 +87,10 @@ function removeMarkers() {
         mymap.removeLayer(layer)
     }, this)
     addMap();
+}
+
+function playAudio() {
+    audio.play().then(r => console.log("alert audio played"));
 }
 
 

@@ -19,7 +19,8 @@
     <link rel="stylesheet" href="main.css">
 </head>
 <body>
-<div id="mapid"></div>
+<div id="mapid">
+</div>
 <script src="map.js"></script>
 </body>
 </html>
