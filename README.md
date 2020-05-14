@@ -17,7 +17,7 @@
 
 ### MainView
 ![Guest view](./src/main/resources/static/img/nodata.png) 
-> If user have problem with Internet connection or if API is no available app will show message like on screenshot.
+> If user have problem with Internet connection or if API is not available app will show message like on screenshot.
 
 ## Technologies
 * Java SE 14
