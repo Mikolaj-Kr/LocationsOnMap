@@ -30,7 +30,7 @@
 * Bootstrap 
 * HTML5, CSS3, JS
 * jQuery, AJAX
-*leaflet map
+* leaflet map
 
 ## Status
 Project is: _finished_.
