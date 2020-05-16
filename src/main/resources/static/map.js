@@ -40,7 +40,7 @@ function mouseStop() {
     mouse =false;
 
 }
-var audio = new Audio('/sounds/kaczka.mp3')
+var audio = new Audio('/sounds/bim.mp3')
 
 function getPopups() {
     $.getJSON('/rest/api/devices', function (list) {
