@@ -9,15 +9,15 @@
 * [Inspiration](#inspiration)
 
 ## General info
-> Application for local Grudziądz TV. App tracks theirs devices on the map and show informations about them. App retrieves information in real time. Here you can see app with examples data in json.  
+> Application for local Grudziądz TV. App tracks theirs devices on the map and shows informations about them. App retrieves information in real time. Here you can see app with examples data in json.  
 ## Features
 ### MainPage
 ![Guest view](./src/main/resources/static/img/mapview.png) 
 >  Page where user can track and get information about devices.  
 
-### MainView
+### ErrorView
 ![Guest view](./src/main/resources/static/img/nodata.png) 
-> If user have problem with Internet connection or if API is not available app will show message like on screenshot.
+> If user has a problem with Internet connection or if API is not available app will show message like on screenshot.
 
 ## Technologies
 * Java SE 14
