@@ -13,14 +13,14 @@ function addMap() {
 }
 
 const redIcon = L.icon({
-    iconUrl: '/img/red-dot.png',
+    iconUrl: '/mk/img/red-dot.png',
     iconSize: [42, 42],
-    iconAnchor: [21, 42]
-
+    iconAnchor: [21, 42],
+    popupAnchor: [0, -42]
 });
 
 const greenIcon = L.icon({
-    iconUrl: '/img/green-dot.png',
+    iconUrl: '/mk/img/green-dot.png',
     iconSize: [42, 42],
     iconAnchor: [21, 42],
     popupAnchor: [0, -42]
@@ -40,10 +40,10 @@ function mouseStop() {
     mouse =false;
 
 }
-var audio = new Audio('/sounds/bim.mp3')
+var audio = new Audio('/mk/sounds/bim.mp3')
 
 function getPopups() {
-    $.getJSON('/rest/api/devices', function (list) {
+    $.getJSON('/mk/rest/api/devices', function (list) {
         if (!mouse) {
             refresh++;
             if (refresh >240){
