@@ -1,4 +1,5 @@
 var mymap = L.map('mapid').setView([53.468419, 18.758323], 13)
+
 function addMap() {
 
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWtyYSIsImEiOiJjazl6dzZuMzMwaXgzM2ZudjdpcnducGZkIn0.if56m-7sdPjwzBnLdnfxTQ', {
@@ -25,56 +26,54 @@ const greenIcon = L.icon({
     iconAnchor: [21, 42],
     popupAnchor: [0, -42]
 });
-var  mouse = false;
+var mouse = false;
 var refresh = 0;
 const div = document.querySelector("#mapid")
 
 // div.addEventListener("mousemove", mouseMove);
 
 function mouseMove() {
-mouse = true;
-setTimeout(mouseStop, 10000)
+    mouse = true;
+    setTimeout(mouseStop, 10000)
 }
 
 function mouseStop() {
-    mouse =false;
+    mouse = false;
 
 }
+
 var audio = new Audio('/mk/sounds/bim.mp3')
 
 function getPopups() {
     $.getJSON('/mk/rest/api/devices', function (list) {
-        if (!mouse) {
-            refresh++;
-            if (refresh >240){
-                location.reload();
-            }
-            removeMarkers();
-            for (var i = 0; i < list.length; i++) {
-                var device = list[i];
-                var detailsAmount = device.deviceDetails.length;
-                var detailsList = device.deviceDetails;
-                var detailsContent = " "
-                for (var x = 0; x < detailsAmount; x++) {
-                    detailsContent = detailsContent + detailsList[x].type + ": " + detailsList[x].value + "</br>";
-                }
-                var popupContent = device.address + "</br> ip: " + device.ip + "</br>" + detailsContent;
-
-
-                if (device.status === "ok") {
-                    var marker = L.marker([device.lat, device.lng], {icon: greenIcon})
-                        .addTo(mymap)
-                        .bindPopup(popupContent);
-                } else {
-                    playAudio();
-                    L.marker([device.lat, device.lng], {icon: redIcon})
-                        .addTo(mymap)
-                        .bindPopup("<b> Problem z " + device.status + "</b></br>" + popupContent);
-                }
-            }
-        } else {
-            setTimeout(getPopups, 10000)
+        refresh++;
+        if (refresh > 240) {
+            location.reload();
         }
+        removeMarkers();
+        for (var i = 0; i < list.length; i++) {
+            var device = list[i];
+            var detailsAmount = device.deviceDetails.length;
+            var detailsList = device.deviceDetails;
+            var detailsContent = " "
+            for (var x = 0; x < detailsAmount; x++) {
+                detailsContent = detailsContent + detailsList[x].type + ": " + detailsList[x].value + "</br>";
+            }
+            var popupContent = device.address + "</br> ip: " + device.ip + "</br>" + detailsContent;
+
+
+            if (device.status === "ok") {
+                var marker = L.marker([device.lat, device.lng], {icon: greenIcon})
+                    .addTo(mymap)
+                    .bindPopup(popupContent);
+            } else {
+                playAudio();
+                L.marker([device.lat, device.lng], {icon: redIcon})
+                    .addTo(mymap)
+                    .bindPopup("<b> Problem z " + device.status + "</b></br>" + popupContent);
+            }
+        }
+
     })
         .fail(function () {
             alert("Problem z odświeżeniem danych, skontaktuj się z administratorem.")
@@ -92,7 +91,6 @@ function removeMarkers() {
 function playAudio() {
     audio.play().then(r => console.log("alert audio played"));
 }
-
 
 getPopups();
 setInterval(getPopups, 60000);

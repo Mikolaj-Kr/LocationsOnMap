@@ -19,8 +19,15 @@
     <link rel="stylesheet" href="main.css">
 </head>
 <body>
-<div id="mapid">
+<div style="width: 100%; height: 100%">
+    <div id="mapid" >
+    </div>
+    <div class="devicesButton">
+       <button onclick="locationRedirect('/mk/devices')"> Urządzenia </button>
+    </div>
 </div>
+
+<script src="main.js"></script>
 <script src="map.js"></script>
 </body>
 </html>

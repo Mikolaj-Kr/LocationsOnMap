@@ -13,15 +13,7 @@ public class Device {
     @JsonProperty("ups_id")
     Long id;
 
-    @JsonProperty("ups_adres")
-    String address;
+    @JsonProperty("aktualny_odczyt")
+    List <DeviceDetails> deviceDetailsList;
 
-    @JsonProperty("ups_ip")
-    String ip;
-
-    @JsonProperty("ups_gps")
-    String coordinate;
-
-    @JsonProperty("dbo.OID")
-    List<DeviceDetails> deviceDetails;
 }

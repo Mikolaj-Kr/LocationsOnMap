@@ -8,5 +8,4 @@ public class DeviceDetailsDto {
     private String type;
     private String value;
     private String status;
-
 }

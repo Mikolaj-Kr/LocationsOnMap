@@ -14,20 +14,22 @@ public class DeviceMapper {
 
     public DeviceDto mapDeviceToDto(Device device) {
         DeviceDto deviceDto = new DeviceDto();
-        String[] coordinatesTable = device.getCoordinate().replaceAll(" ", "").split(",");
+        String[] coordinatesTable = device.getDeviceDetailsList().get(0).getGps().replaceAll(" ", "").split(",");
         String status = "ok";
         List<DeviceDetailsDto> deviceDetailsDtoList = new ArrayList<>();
         deviceDto.setId(device.getId());
-        deviceDto.setAddress(device.getAddress());
+        deviceDto.setAddress(device.getDeviceDetailsList().get(0).getName());
         deviceDto.setLat(coordinatesTable[0]);
         deviceDto.setLng(coordinatesTable[1]);
-        deviceDto.setIp(device.getIp());
-        device.getDeviceDetails().forEach(deviceDetails -> {
+        deviceDto.setIp(device.getDeviceDetailsList().get(0).getIp());
+        device.getDeviceDetailsList().forEach(details -> {
             DeviceDetailsDto deviceDetailsDto = new DeviceDetailsDto();
-            deviceDetailsDto.setType(deviceDetails.getType());
-            deviceDetailsDto.setValue(deviceDetails.getValueFromDeviceList().get(0).getValue());
-            deviceDetailsDto.setStatus(deviceDetails.getValueFromDeviceList().get(0).getStatus());
-            deviceDetailsDtoList.add(deviceDetailsDto);
+            deviceDetailsDto.setStatus(details.getStatus());
+            deviceDetailsDto.setValue(details.getValue());
+            deviceDetailsDto.setType(details.getType());
+            if (!deviceDetailsDto.getValue().equals("SNMP No-Such-Object")) {
+                deviceDetailsDtoList.add(deviceDetailsDto);
+            }
         });
         deviceDto.setDeviceDetails(deviceDetailsDtoList);
 
@@ -37,8 +39,7 @@ public class DeviceMapper {
                 break;
             }
         }
-
-            deviceDto.setStatus(status);
+        deviceDto.setStatus(status);
         return deviceDto;
     }
 }

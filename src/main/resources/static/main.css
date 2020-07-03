@@ -1,2 +1,32 @@
+
+
 #mapid{
-    height: 100%}
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    z-index: 0;
+
+}
+
+.devicesButton{
+    position: absolute;
+    left: 95%;
+    top: 0%;
+    height: 1%;
+    z-index: 1;
+}
+
+.functionalDevices{
+    height: 100%;
+    width: 50%;
+}
+
+.faultyDevices{
+    width: 50%;
+    height: 100%;
+}
+
+
+

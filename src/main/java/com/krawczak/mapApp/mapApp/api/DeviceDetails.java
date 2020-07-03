@@ -10,9 +10,24 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class DeviceDetails {
 
-    @JsonProperty("OID_typ")
-    private String type;
+    @JsonProperty("oid_id")
+    private String oidId;
 
-    @JsonProperty("dbo.aktualny_odczyt")
-    private List<ValueFromDevice> valueFromDeviceList;
+    @JsonProperty("status")
+    private String status;
+
+    @JsonProperty("nazwa")
+    String name;
+
+    @JsonProperty("gps")
+    String gps;
+
+    @JsonProperty("ip")
+    String ip;
+
+    @JsonProperty("typ")
+    String type;
+
+    @JsonProperty("wartosc")
+    String value;
 }
