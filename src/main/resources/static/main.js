@@ -1,3 +1,3 @@
 function locationRedirect(param) {
-    location.replace(param);
+    window.open("http://localhost:8181" + param);
 }

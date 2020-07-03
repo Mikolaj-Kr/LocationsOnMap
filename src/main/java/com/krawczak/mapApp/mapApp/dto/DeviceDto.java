@@ -1,6 +1,5 @@
 package com.krawczak.mapApp.mapApp.dto;
 
-import com.krawczak.mapApp.mapApp.api.DeviceDetails;
 import lombok.Data;
 
 import java.util.List;

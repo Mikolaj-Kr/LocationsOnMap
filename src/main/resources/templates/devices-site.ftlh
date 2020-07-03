@@ -12,32 +12,6 @@
 </head>
 <body>
 
-<div class="functionalDevices">
-    <h1 style="align-content: center">Wszystkie urządzenia</h1>
-    <div class="table-responsive-md">
-        <table class="table table-border table-striped">
-            <thead class="thead-dark">
-            <tr>
-                <th scope="col" class="text-center">Urządzenie</th>
-                <th scope="col" class="text-center">Informacje</th>
-            </tr>
-            </thead>
-            <tbody>
-            <#list devicesList as device>
-                <tr <#if device.status == 'ok'> <#else> bgcolor="red" </#if>>
-                    <td class="clickable-row">${device.address}</td>
-                    <td class="clickable-row">
-                        <#list device.deviceDetails as detail>
-                            ${detail.type} ${detail.value} ${detail.status};
-                        </#list>
-                    </td>
-                </tr>
-            </#list>
-            </tbody>
-        </table>
-    </div>
-</div>
-
 <div class="faultyDevices">
     <h1 style="align-content: center">Urządzenia niesprawne</h1>
     <table class="table table-border table-striped">
@@ -50,18 +24,44 @@
         <tbody>
         <#list devicesList as device>
             <#if device.status == "ok"> <#else>
-            <tr>
-                <td class="clickable-row">${device.address}</td>
-                <td class="clickable-row">
-                    <#list device.deviceDetails as detail>
-                        ${detail.type} ${detail.value} ${detail.status};
-                    </#list>
-                </td>
-            </tr>
+                <tr>
+                    <td class="clickable-row">${device.address}</td>
+                    <td class="clickable-row">
+                        <#list device.deviceDetails as detail>
+                            ${detail.type} ${detail.value} ${detail.status};
+                        </#list>
+                    </td>
+                </tr>
             </#if>
         </#list>
         </tbody>
     </table>
+</div>
+
+<div class="functionalDevices">
+    <h1 style="align-content: center">Wszystkie urządzenia</h1>
+    <div class="table-responsive-md">
+        <table class="table table-border table-striped">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col" class="text-center">Urządzenie</th>
+                <th scope="col" class="text-center">Informacje</th>
+            </tr>
+            </thead>
+            <tbody>
+            <#list devicesList as device>
+                <tr>
+                    <td class="clickable-row">${device.address}</td>
+                    <td class="clickable-row">
+                        <#list device.deviceDetails as detail>
+                            ${detail.type} ${detail.value} ${detail.status};
+                        </#list>
+                    </td>
+                </tr>
+            </#list>
+            </tbody>
+        </table>
+    </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"

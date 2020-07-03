@@ -63,7 +63,7 @@ function getPopups() {
 
 
             if (device.status === "ok") {
-                var marker = L.marker([device.lat, device.lng], {icon: greenIcon})
+                L.marker([device.lat, device.lng], {icon: greenIcon})
                     .addTo(mymap)
                     .bindPopup(popupContent);
             } else {
