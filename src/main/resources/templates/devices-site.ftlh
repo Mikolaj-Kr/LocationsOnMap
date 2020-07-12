@@ -12,31 +12,31 @@
 </head>
 <body>
 
-<div class="faultyDevices">
-    <h1 style="align-content: center">Urządzenia niesprawne</h1>
-    <table class="table table-border table-striped">
-        <thead class="thead-dark">
-        <tr>
-            <th scope="col" class="text-center">Urządzenie</th>
-            <th scope="col" class="text-center">Informacje</th>
-        </tr>
-        </thead>
-        <tbody>
-        <#list devicesList as device>
-            <#if device.status == "ok"> <#else>
-                <tr>
-                    <td class="clickable-row">${device.address}</td>
-                    <td class="clickable-row">
-                        <#list device.deviceDetails as detail>
-                            ${detail.type} ${detail.value} ${detail.status};
-                        </#list>
-                    </td>
-                </tr>
-            </#if>
-        </#list>
-        </tbody>
-    </table>
-</div>
+    <div class="faultyDevices">
+        <h1 style="align-content: center">Urządzenia zgłaszające błąd</h1>
+        <table class="table table-border table-striped">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col" class="text-center">Urządzenie</th>
+                <th scope="col" class="text-center">Informacje</th>
+            </tr>
+            </thead>
+            <tbody>
+            <#list devicesList as device>
+                <#if device.status == "ok"> <#else>
+                    <tr>
+                        <td class="clickable-row">${device.address}</td>
+                        <td class="clickable-row">
+                            <#list device.deviceDetails as detail>
+                                ${detail.type} ${detail.value} ${detail.status};
+                            </#list>
+                        </td>
+                    </tr>
+                </#if>
+            </#list>
+            </tbody>
+        </table>
+    </div>
 
 <div class="functionalDevices">
     <h1 style="align-content: center">Wszystkie urządzenia</h1>

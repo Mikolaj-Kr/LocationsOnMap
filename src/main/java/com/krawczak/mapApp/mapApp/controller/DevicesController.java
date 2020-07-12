@@ -1,5 +1,6 @@
 package com.krawczak.mapApp.mapApp.controller;
 
+import com.krawczak.mapApp.mapApp.dto.DeviceDto;
 import com.krawczak.mapApp.mapApp.service.DeviceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,6 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -23,7 +25,8 @@ public class DevicesController {
     @RequestMapping("/devices")
     public ModelAndView getDevicesTable() throws IOException, InterruptedException {
         Map<String, Object> params = new HashMap<>();
-        params.put("devicesList", deviceService.getDevicesList());
+        List<DeviceDto> devices = deviceService.getDevicesList();
+        params.put("devicesList", devices);
         return new ModelAndView("devices-site" ,params);
     }
 }

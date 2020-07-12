@@ -27,9 +27,9 @@ public class DeviceService {
     public List<DeviceDto> getDevicesList() throws IOException, InterruptedException {
         List<DeviceDto> devicesList = new ArrayList<>();
         int x = 0;
-        while (devicesList.isEmpty() && x<10 ) {
+        while (devicesList.isEmpty() && x < 10) {
             apiParser.devicesParser().forEach(device -> devicesList.add(deviceMapper.mapDeviceToDto(device)));
-            if (x>0){
+            if (x > 0) {
                 Thread.sleep(5000);
             }
             x++;
